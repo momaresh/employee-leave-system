@@ -63,7 +63,13 @@
         </div>
     </div>
 
-    <button wire:click="store" class="bg-blue-500 text-white px-4 py-2 rounded">{{__('messages.submit')}}</button>
+    @if ($updateMode)
+        <button wire:click="update" class="bg-blue-500 text-white px-4 py-2 rounded">{{__('messages.update')}}</button>
+        <button wire:click="cancel" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">{{__('messages.cancel')}}</button>
+    @else
+        <button wire:click="store" class="bg-blue-500 text-white px-4 py-2 rounded">{{__('messages.submit')}}</button>
+    @endif
+
 
     <h3 class="text-lg font-semibold mt-8 mb-2">{{__('messages.your_leave_requests')}}</h3>
     <table class="w-full text-sm border border-gray-300">
@@ -73,6 +79,7 @@
                 <th class="p-2">{{__('messages.from_date')}}</th>
                 <th class="p-2">{{__('messages.to_date')}}</th>
                 <th class="p-2">{{__('messages.status')}}</th>
+                <th class="p-2">{{__('messages.action')}}</th>
             </tr>
         </thead>
         <tbody>
@@ -82,6 +89,16 @@
                     <td class="p-2">{{ $req->from_date }}</td>
                     <td class="p-2">{{ $req->to_date }}</td>
                     <td class="p-2">{{ $req->status }}</td>
+                    @if ($req->status === 'Pending')
+                        <td class="p-2 space-x-2">
+                            <button wire:click="edit({{ $req->id }})" class="text-green-600">Edit</button>
+                            <button wire:click="delete({{ $req->id }})" class="text-red-600">Delete</button>
+                        </td>
+                    @else
+                        <td class="p-2 space-x-2">
+                            <span class="text-gray-500 italic">No action</span>
+                        </td>
+                    @endif
                 </tr>
             @empty
                 <tr><td colspan="4" class="p-2 text-center">{{__('messages.no_leave_requests_found')}}</td></tr>

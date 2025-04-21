@@ -40,4 +40,13 @@ return [
     'export_pdf' => 'تصدير PDF',
     'no_data_found' => 'لا يوجد بيانات',
     'employees' => 'الموظفين',
+    'update' => 'تحديث',
+    'delete' => 'حذف',
+    'cancel' => 'الغاء',
+    'create' => 'انشاء',
+    'edit' => 'تعديل',
+    'name' => 'اسم',
+    'number' => 'رقم',
+    'email' => 'البريد الالكتروني',
+    'action' => 'الاجراء',
 ];

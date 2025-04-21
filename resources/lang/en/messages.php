@@ -39,4 +39,8 @@ return [
     'export_pdf' => 'Export PDF',
     'no_data_found' => 'No data found.',
     'employees' => 'Employees',
+    'update'   => 'Update',
+    'delete'  => 'Delete',
+    'cancel' => 'Cancel',
+    'action' => 'Action',
 ];
