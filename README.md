@@ -60,3 +60,61 @@ php artisan migrate --seed
 
 # 8. Serve the app
 php artisan serve
+```
+
+---
+
+## 🧪 Testing
+
+To run tests (feature, unit, Livewire components):
+
+```bash
+php artisan test
+```
+
+---
+
+## 🧑‍💻 Default Login (Seeded Users)
+
+| Role    | Email               | Password   |
+|---------|---------------------|------------|
+| Admin   | admin@example.com   | password   |
+| Employee| employee@example.com| password   |
+
+You can change or add new users via database or using Tinker.
+
+---
+
+## 🌍 Language & RTL Support
+
+You can switch languages via the top navbar. If Arabic is selected, the layout will automatically switch to RTL mode using Tailwind’s `dir="rtl"` class.
+
+---
+
+## 📁 Folder Structure
+
+- `app/Livewire` - All Livewire components
+- `resources/views` - Blade views
+- `resources/lang` - Translations
+- `tests/Feature` - Feature tests
+- `tests/Unit` - Unit tests
+- `database/factories` - Model factories
+
+---
+
+## 🧱 Future (Optional)
+
+You can optionally move toward a **client-server architecture** by separating the API (Laravel backend) and frontend (Vue/React or Livewire SPA), following modern practices.
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome! Feel free to fork and improve the project.
+
+---
+
+## 📝 License
+
+This project is open-source and available under the [MIT License](LICENSE).
+

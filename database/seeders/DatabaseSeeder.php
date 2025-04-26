@@ -28,6 +28,26 @@ class DatabaseSeeder extends Seeder
         ]);
         $admin->assignRole('Admin');
 
+        // create employee user
+        $employee = User::factory()->create([
+            'name' => 'Employee User',
+            'email' => 'employee@example.com',
+            'role' => 'Employee',
+            'password' => bcrypt('password'),
+        ]);
+        $employee->assignRole('Employee');
+
+        // create employee
+        Employee::factory()->create([
+            'user_id' => $employee->id,
+            'employee_name' => 'Employee User',
+            'employee_number' => 'EMP001',
+            'mobile' => '1234567890',
+            'address' => '123 Main St',
+            'notes' => 'No notes',
+        ]);
+        
+
         // Create leave types
         LeaveType::factory()->count(4)->create();
 
