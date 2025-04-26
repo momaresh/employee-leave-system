@@ -19,7 +19,6 @@
     </head>
     <body class="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }} font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-
             <livewire:layout.navigation />
 
             <!-- Page Heading -->

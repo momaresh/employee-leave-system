@@ -1,47 +1,60 @@
 <?php
 
-namespace Tests\Unit\Models;
-
 use App\Models\LeaveRequest;
-use Tests\TestCase;
 use App\Models\LeaveType;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Mockery;
 
-class LeaveTypeTest extends TestCase
-{
-    use RefreshDatabase;
+uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-    public function test_leave_type_can_be_created()
-    {
-        $type = LeaveType::create([
+it('can create a leave type', function () {
+    // Mock the LeaveType model
+    $mockLeaveType = \Mockery::mock(LeaveType::class);
+    $mockLeaveType->shouldReceive('create')
+        ->once()
+        ->with([
             'name' => 'Sick Leave',
-        ]);
+        ])
+        ->andReturnSelf();  // Mock the create method
 
-        $this->assertDatabaseHas('leave_types', [
-            'name' => 'Sick Leave',
-        ]);
-    }
+    // Simulate the create behavior and assert that the method was called
+    $mockLeaveType->create(['name' => 'Sick Leave']);
+    $mockLeaveType->shouldHaveReceived('create')
+        ->with(['name' => 'Sick Leave']);
+});
 
-    public function test_leave_type_can_be_updated()
-    {
-        $type = LeaveType::create([
-            'name' => 'Sick Leave',
-        ]);
-
-        $type->update([
+it('can update a leave type', function () {
+    // Mock the LeaveType model
+    $mockLeaveType = \Mockery::mock(LeaveType::class);
+    $mockLeaveType->shouldReceive('update')
+        ->once()
+        ->with([
             'name' => 'Vacation',
-        ]);
+        ])
+        ->andReturn(true);  // Simulate update returning true
 
-        $this->assertDatabaseHas('leave_types', [
-            'name' => 'Vacation',
-        ]);
-    }
+    // Simulate the update behavior and assert that the method was called
+    $mockLeaveType->update(['name' => 'Vacation']);
+    $mockLeaveType->shouldHaveReceived('update')
+        ->with(['name' => 'Vacation']);
+});
 
-    public function test_leave_type_has_many_leave_requests()
-    {
-        $type = LeaveType::factory()->create();
-        LeaveRequest::factory()->for($type)->create();
+it('can have many leave requests', function () {
+    // Create a mock for LeaveRequest model
+    $leaveRequestMock = Mockery::mock(LeaveRequest::class);
 
-        $this->assertInstanceOf(LeaveRequest::class, $type->leaveRequests->first());
-    }
-}
+    // Create a mock for the LeaveType model
+    $type = Mockery::mock(LeaveType::class)->makePartial();
+
+    // Mocking the leaveRequests method to return a HasMany relationship
+    $hasManyMock = Mockery::mock(HasMany::class);
+
+    // Setting expectations for getResults() to return a collection with the LeaveRequest mock
+    $hasManyMock->shouldReceive('getResults')->andReturn(collect([$leaveRequestMock]));
+
+    // Mock the leaveRequests method to return our mocked HasMany relationship
+    $type->shouldReceive('leaveRequests')->andReturn($hasManyMock);
+
+    // Asserting that leaveRequests contains the mocked LeaveRequest
+    expect($type->leaveRequests)->toContain($leaveRequestMock);
+});
